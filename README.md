@@ -1,1 +1,3 @@
-ATA
+# ATA (Alexa Teaching Assistant)
+
+Alexa Teaching assistant is a platform that makes it easier for students to track their lectures.
