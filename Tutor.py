@@ -24,6 +24,8 @@ from email.mime.text import MIMEText
 
 import smtplib
 
+from update_student import update_student
+
 
 
 class Ui_Dialog(object):
@@ -75,6 +77,8 @@ class Ui_Dialog(object):
             print('No E-mail Connection')
 
     def update_info(self):
+
+        update_student() # from update_student library
     
         with open("all.txt") as f:
             lines = f.readlines()
