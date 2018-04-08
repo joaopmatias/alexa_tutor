@@ -6,6 +6,8 @@ import time
 
 import speech_recognition as sr
 
+import update_teacher as ut
+
 filename = 'all.txt'
 
 
@@ -22,6 +24,7 @@ def callback(recognizer, audio):
         f.write(text)
         f.write(' ')
         f.close()
+        ut.update_teacher()
     except sr.UnknownValueError:
         print("Google Speech Recognition could not understand audio")
     except sr.RequestError as e:

@@ -1,4 +1,5 @@
 .*
 !/.gitignore
 all_bckp.txt
+*.pyc
 
