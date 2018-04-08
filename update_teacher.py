@@ -11,7 +11,5 @@ def update_teacher():
 	s3_teacher.Bucket('alexatutor').put_object(ACL='public-read',Key='all.txt', Body=data)
 	data.close()
 
-
-
 if __name__ == '__main__':
 	update_teacher() 
