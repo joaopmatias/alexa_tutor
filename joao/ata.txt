@@ -1,0 +1,6 @@
+instal boto3 sdk. api for aws services.
+
+$ pip install boto3
+
+
+oioioioioi

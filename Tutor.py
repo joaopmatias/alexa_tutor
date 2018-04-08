@@ -18,6 +18,11 @@ from bs4 import BeautifulSoup
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
 
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+
+import smtplib
 
 
 
@@ -39,21 +44,35 @@ class Ui_Dialog(object):
         self.lineEdit.setObjectName("lineEdit")
         self.lineEdit.textChanged.connect(self.search_text)
 
-
         self.lineEdit.textChanged.connect(self.search_text)
         self.pushButton.clicked.connect(self.update_info)
 
         self.pushButton_2 = QtWidgets.QPushButton(Dialog)
         self.pushButton_2.setGeometry(QtCore.QRect(140, 800, 241, 27))
         self.pushButton_2.setObjectName("pushButton_2")
+
+        self.pushButton_2.clicked.connect(self.send_transcript_to_self)
+
         self.pushButton_3 = QtWidgets.QPushButton(Dialog)
         self.pushButton_3.setGeometry(QtCore.QRect(520, 800, 361, 27))
         self.pushButton_3.setObjectName("pushButton_3")
+
+        self.pushButton_3.clicked.connect(self.send_transcript_to_self)
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
         self.update_info()
+
+
+
+        try:
+            self.server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+            self.server.ehlo()
+            self.server.login('alexatutor8@gmail.com', 'alokjoaopm')
+
+        except:
+            print('No E-mail Connection')
 
     def update_info(self):
     
@@ -65,14 +84,31 @@ class Ui_Dialog(object):
 
             self.set_text(lines)
 
+        self.lineEdit.clear()
+
+    def send_transcript_to_self(self):
+        try:
+
+            subject = 'Alexa Tutor Transcript'
+            message = 'Subject: {}\n\n{}'.format(subject, self.raw_text)
+
+            
+
+            self.server.sendmail('alexatutor8@gmail.com', 'alexatutor8@gmail.com', message)
+        except:
+            pass
+
+
+
     def set_text(self, lines):
 
 
         self.text_str = ''
+        self.raw_text = ''
 
         for line in lines:
             self.text_str = self.text_str + line + '<br />'
-
+            self.raw_text = self.raw_text + line + '\n'
             self.text_str0 = self.text_str[:]
 
             
@@ -128,6 +164,7 @@ class Ui_Dialog(object):
         self.pushButton_3.setText(_translate("Dialog", "Email Query to Instructor"))
 
 if __name__ == "__main__":
+
     import sys
 
     app = QtWidgets.QApplication(sys.argv)
@@ -137,6 +174,7 @@ if __name__ == "__main__":
     ui = Ui_Dialog()
     ui.setupUi(Dialog)
 
+    Dialog.setWindowIcon(QtGui.QIcon('Tutor.jpg'))
     Dialog.show()
 
     sys.exit(app.exec_())
