@@ -8,7 +8,6 @@ import speech_recognition as sr
 
 filename = 'all.txt'
 
-f = open(filename, 'a')
 
 # this is called from the background thread
 def callback(recognizer, audio):
@@ -17,9 +16,11 @@ def callback(recognizer, audio):
         # for testing purposes, we're just using the default API key
         # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY")`
         # instead of `r.recognize_google(audio)`
+        f = open(filename, 'a')
         text = recognizer.recognize_google(audio)
         print("Google Speech Recognition thinks you said " + text)
         f.write(text)
+        f.close()
     except sr.UnknownValueError:
         print("Google Speech Recognition could not understand audio")
     except sr.RequestError as e:
@@ -36,8 +37,10 @@ print("Will start listening")
 stop_listening = r.listen_in_background(m, callback, phrase_time_limit=20)
 # `stop_listening` is now a function that, when called, stops background listening
 
-# do some unrelated computations for 5 seconds
-for _ in range(62): time.sleep(5)  # we're still listening even though the main thread is doing other things
+# do some unrelated computations for t seconds
+tt = 80
+lim = int(tt/5) + 1
+for _ in range(lim): time.sleep(5)  # we're still listening even though the main thread is doing other things
 
 # calling this function requests that the background listener stop listening
 stop_listening()
