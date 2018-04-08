@@ -20,6 +20,7 @@ def callback(recognizer, audio):
         text = recognizer.recognize_google(audio)
         print("Google Speech Recognition thinks you said " + text)
         f.write(text)
+        f.write(' ')
         f.close()
     except sr.UnknownValueError:
         print("Google Speech Recognition could not understand audio")
@@ -38,7 +39,7 @@ stop_listening = r.listen_in_background(m, callback, phrase_time_limit=20)
 # `stop_listening` is now a function that, when called, stops background listening
 
 # do some unrelated computations for t seconds
-tt = 80
+tt = 300
 lim = int(tt/5) + 1
 for _ in range(lim): time.sleep(5)  # we're still listening even though the main thread is doing other things
 
