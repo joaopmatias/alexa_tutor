@@ -1,3 +1,3 @@
-# ATA (Alexa Teaching Assistant)
+# Alexa Tutor
 
-Alexa Teaching assistant is a platform that makes it easier for students to keep track of their lectures.
+Alexa Tutor is a platform that makes it easier for students to keep track of their lectures.
